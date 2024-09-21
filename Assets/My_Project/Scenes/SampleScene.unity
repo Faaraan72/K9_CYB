@@ -136,7 +136,7 @@ GameObject:
   - component: {fileID: 51176018}
   - component: {fileID: 51176017}
   m_Layer: 5
-  m_Name: menu
+  m_Name: Settingsbtn
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -226,7 +226,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 1306270215, guid: a5c875b36854f274d94b7aada5cdc8e6, type: 3}
+  m_Sprite: {fileID: 138575174, guid: 2dd8164dce37290489bf19d529b786bc, type: 3}
   m_Type: 0
   m_PreserveAspect: 0
   m_FillCenter: 1
@@ -295,7 +295,7 @@ GameObject:
   - component: {fileID: 340038076}
   - component: {fileID: 340038075}
   m_Layer: 5
-  m_Name: exit
+  m_Name: exitbtn
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -385,7 +385,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: -2037999652, guid: a5c875b36854f274d94b7aada5cdc8e6, type: 3}
+  m_Sprite: {fileID: -930907383, guid: 2dd8164dce37290489bf19d529b786bc, type: 3}
   m_Type: 0
   m_PreserveAspect: 0
   m_FillCenter: 1
@@ -598,12 +598,12 @@ GameObject:
   - component: {fileID: 412642958}
   - component: {fileID: 412642957}
   m_Layer: 5
-  m_Name: MenuPanel
+  m_Name: SettingsPanel
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!224 &412642956
 RectTransform:
   m_ObjectHideFlags: 0
@@ -926,6 +926,7 @@ GameObject:
   - component: {fileID: 751866526}
   - component: {fileID: 751866527}
   - component: {fileID: 751866528}
+  - component: {fileID: 751866529}
   m_Layer: 0
   m_Name: ScriptHandler
   m_TagString: Untagged
@@ -965,8 +966,8 @@ MonoBehaviour:
   MenuButton: {fileID: 51176017}
   CloseMenuButton: {fileID: 1222456796}
   GamePanel: {fileID: 1656698896}
-  HomePanel: {fileID: 1638030853}
-  MenuPanel: {fileID: 412642955}
+  GameMenu: {fileID: 1638030853}
+  SettingsPanel: {fileID: 412642955}
 --- !u!114 &751866528
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -982,13 +983,17 @@ MonoBehaviour:
   PlayArea: {fileID: 706006552}
   CardPrefab: {fileID: 6907357342033180212, guid: 388cb5616affca347837e168f5642ec9, type: 3}
   Sprites:
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
+  - {fileID: 21300000, guid: 16a44f5869cb78346b6b54d199672bf0, type: 3}
+  - {fileID: 21300000, guid: 79da346004d4d16468ef465e8a66dab8, type: 3}
+  - {fileID: 21300000, guid: 1f79fe3e6fa48c24babfa10527c524f2, type: 3}
+  - {fileID: 21300000, guid: 7a37f5f44f072aa438dbbf82efce9dfd, type: 3}
+  - {fileID: 21300000, guid: d749ccb481b9b524087ee1ce91f1c110, type: 3}
+  - {fileID: 21300000, guid: d4e50147af991d64283c7b0416039769, type: 3}
+  - {fileID: 21300000, guid: bad0cc1a56f12c14394105617e39a2b8, type: 3}
+  - {fileID: 21300000, guid: b48949a04319e4c43b3eefd6f0a6d776, type: 3}
+  - {fileID: 21300000, guid: 1f79fe3e6fa48c24babfa10527c524f2, type: 3}
+  FruitsList: []
+  CardsList: []
   InstCards:
   - {fileID: 0}
   - {fileID: 0}
@@ -1002,8 +1007,105 @@ MonoBehaviour:
   - {fileID: 0}
   - {fileID: 0}
   - {fileID: 0}
-  flipSpeed: 500
-  flipDuration: 0.5
+  numberofcards: 12
+  numberofSprites: 0
+  flipAudio: {fileID: 8300000, guid: dcc90ab06b8ad7d418d4845bf0741e00, type: 3}
+--- !u!82 &751866529
+AudioSource:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 751866525}
+  m_Enabled: 1
+  serializedVersion: 4
+  OutputAudioMixerGroup: {fileID: 0}
+  m_audioClip: {fileID: 8300000, guid: dcc90ab06b8ad7d418d4845bf0741e00, type: 3}
+  m_PlayOnAwake: 1
+  m_Volume: 1
+  m_Pitch: 1
+  Loop: 0
+  Mute: 0
+  Spatialize: 0
+  SpatializePostEffects: 0
+  Priority: 128
+  DopplerLevel: 1
+  MinDistance: 1
+  MaxDistance: 500
+  Pan2D: 0
+  rolloffMode: 0
+  BypassEffects: 0
+  BypassListenerEffects: 0
+  BypassReverbZones: 0
+  rolloffCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 1
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    - serializedVersion: 3
+      time: 1
+      value: 0
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+  panLevelCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 0
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+  spreadCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 0
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+  reverbZoneMixCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 1
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
 --- !u!1 &919934139
 GameObject:
   m_ObjectHideFlags: 0
@@ -1107,7 +1209,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 817164903, guid: a5c875b36854f274d94b7aada5cdc8e6, type: 3}
+  m_Sprite: {fileID: 1319039335, guid: 2dd8164dce37290489bf19d529b786bc, type: 3}
   m_Type: 0
   m_PreserveAspect: 0
   m_FillCenter: 1
@@ -1306,7 +1408,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: -2037999652, guid: a5c875b36854f274d94b7aada5cdc8e6, type: 3}
+  m_Sprite: {fileID: -930907383, guid: 2dd8164dce37290489bf19d529b786bc, type: 3}
   m_Type: 0
   m_PreserveAspect: 0
   m_FillCenter: 1
@@ -1337,7 +1439,7 @@ GameObject:
   - component: {fileID: 1327241317}
   - component: {fileID: 1327241316}
   m_Layer: 5
-  m_Name: play
+  m_Name: playbtn
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -1427,7 +1529,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 235439679, guid: a5c875b36854f274d94b7aada5cdc8e6, type: 3}
+  m_Sprite: {fileID: -991448463, guid: 2dd8164dce37290489bf19d529b786bc, type: 3}
   m_Type: 0
   m_PreserveAspect: 0
   m_FillCenter: 1
@@ -1457,12 +1559,12 @@ GameObject:
   - component: {fileID: 1638030856}
   - component: {fileID: 1638030855}
   m_Layer: 5
-  m_Name: HomePanel
+  m_Name: GameMenu
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!224 &1638030854
 RectTransform:
   m_ObjectHideFlags: 0
@@ -1585,7 +1687,7 @@ MonoBehaviour:
       m_Calls: []
   m_FontData:
     m_Font: {fileID: 12800000, guid: e97d630fae1927548832f54be7f78569, type: 3}
-    m_FontSize: 100
+    m_FontSize: 75
     m_FontStyle: 0
     m_BestFit: 0
     m_MinSize: 0
@@ -1596,7 +1698,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 1
     m_VerticalOverflow: 1
     m_LineSpacing: 1
-  m_Text: M E N U
+  m_Text: S E T T I N G S
 --- !u!222 &1648829566
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -1617,7 +1719,7 @@ GameObject:
   - component: {fileID: 1656698899}
   - component: {fileID: 1656698898}
   m_Layer: 5
-  m_Name: GamePanel
+  m_Name: GameArea
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -1786,7 +1888,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: -845710453, guid: a5c875b36854f274d94b7aada5cdc8e6, type: 3}
+  m_Sprite: {fileID: -1914396006, guid: 2dd8164dce37290489bf19d529b786bc, type: 3}
   m_Type: 0
   m_PreserveAspect: 0
   m_FillCenter: 1

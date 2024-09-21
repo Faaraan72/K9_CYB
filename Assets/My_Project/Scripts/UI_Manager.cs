@@ -18,12 +18,13 @@ namespace cyb
 
         [Header("Panels")]
         public GameObject GamePanel;
-        public GameObject HomePanel;
-        public GameObject MenuPanel;
+        public GameObject GameMenu;
+        public GameObject SettingsPanel;
 
         void Start()
         {
-            HomePanel.SetActive(true);
+            GameMenu.SetActive(true);
+            SettingsPanel.SetActive(false);
             PlayButton.onClick.AddListener(StartGame);
             ExitButton.onClick.AddListener(ExitGame);
             MenuButton.onClick.AddListener(OpenMenu);
@@ -40,22 +41,26 @@ namespace cyb
          void StartGame()
         {
             GamePanel.SetActive(true);
-            HomePanel.SetActive(false);
+            GameMenu.SetActive(false);
             GameplayManager.instance.placeCards();
         }
         void OpenMenu()
         {
-            MenuPanel.SetActive(true);
+            SettingsPanel.SetActive(true);
            
         }
         void ExitGame()
         {
             GamePanel.SetActive(true);
-            HomePanel.SetActive(false);
+            GameMenu.SetActive(false);
         }
         void closeMenu()
         {
-            MenuPanel.SetActive(false);
+            SettingsPanel.SetActive(false);
+        }
+        void restart()
+        {
+
         }
     }
 }

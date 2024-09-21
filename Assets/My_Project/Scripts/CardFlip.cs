@@ -27,7 +27,7 @@ namespace cyb
                 // Increase the flip progress over time
                 flipProgress += Time.deltaTime / flipDuration;
 
-                // Perform the rotation using Lerp
+                //  rotating using Lerp
                 transform.rotation = Quaternion.Lerp(transform.rotation, targetRotation, flipProgress);
 
                 // Check if the flip is complete
@@ -35,27 +35,33 @@ namespace cyb
                 {
                     isFlipping = false; // Stop flipping
                     flipProgress = 0f;  // Reset progress for future flips
+                    
                 }
             }
         }
 
-        // Function to rotate to 180 degrees on Y-axis
+        // Function to rotate 
         public void RotateTo180()
         {
             if (!isFlipping)
             {
                 targetRotation = Quaternion.Euler(0, 180, 0);
                 isFlipping = true;
+                gameObject.transform.GetChild(1).gameObject.SetActive(true);
             }
+            GameplayManager.instance.CheckFruits (gameObject.transform.GetChild(1).name, gameObject); //call for check  or ADD in list
+            
+           
         }
 
-        // Function to rotate back to 0 degrees on Y-axis
+        // Function to rotate back 
         public void RotateBackTo0()
         {
             if (!isFlipping)
             {
                 targetRotation = startRotation;
                 isFlipping = true;
+                gameObject.transform.GetChild(1).gameObject.SetActive(false);
             }
         }
     }
