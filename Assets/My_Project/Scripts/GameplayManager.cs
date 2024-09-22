@@ -62,9 +62,9 @@ namespace cyb
                 InstCards[i] = Instantiate(CardPrefab, PlayArea.transform);
                 CardFlip cardFlip = InstCards[i].AddComponent<CardFlip>(); 
                 InstCards[i].GetComponent<Button>().onClick.AddListener(cardFlip.RotateTo180);
-                clickaudio c =InstCards[i].AddComponent<clickaudio>();
-                InstCards[i].GetComponent<Button>().onClick.AddListener(c.PlayTapSound);
-                c.tapSound = flipAudio;
+               // clickaudio c =InstCards[i].AddComponent<clickaudio>();
+               //InstCards[i].GetComponent<Button>().onClick.AddListener(c.PlayTapSound);
+               // c.tapSound = flipAudio;
 
             }
             PlaceRandomFruit();
@@ -99,7 +99,6 @@ namespace cyb
             {
                 Debug.Log("Cards::" + RandomCardsIndex[i]);
             }
-
             //for every Random Card Index,  place the random Sprite
             int j = 0;
             foreach(int i in RandomCardsIndex) {
@@ -120,6 +119,7 @@ namespace cyb
       public bool CheckFruits(string str, GameObject g)
         {
             // If there is already one item in the list, compare it with the new one
+            
             if (FruitsList.Count == 1 && CardsList.Count == 1)
             {
                 string previousName = FruitsList[0];
@@ -139,6 +139,7 @@ namespace cyb
                 else
                 {
                     // If the names don't match, remove the previous one
+                    
                     FruitsList.RemoveAt(0);
                     CardsList.RemoveAt(0);
                     Debug.Log("Removed previous card: " + previousCard.transform.GetChild(1).name);
@@ -152,6 +153,7 @@ namespace cyb
             CardsList.Add(g);
             Debug.Log("Added: " + str);
             Debug.Log("Added card: " + g.transform.GetChild(1).name);
+            
 
             return false;  //false since cards didn't match
         }

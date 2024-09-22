@@ -1,4 +1,6 @@
 using UnityEngine;
+using UnityEngine.UI;
+
 
 namespace cyb
 {
@@ -50,7 +52,7 @@ namespace cyb
                 gameObject.transform.GetChild(1).gameObject.SetActive(true);
             }
             GameplayManager.instance.CheckFruits (gameObject.transform.GetChild(1).name, gameObject); //call for check  or ADD in list
-            
+            gameObject.GetComponent<Button>().enabled = false;
            
         }
 
@@ -63,6 +65,8 @@ namespace cyb
                 isFlipping = true;
                 gameObject.transform.GetChild(1).gameObject.SetActive(false);
             }
+            gameObject.GetComponent<Button>().enabled = true;
+
         }
     }
 }
