@@ -3423,6 +3423,10 @@ MonoBehaviour:
   numberofcards: 12
   numberofSprites: 0
   flipAudio: {fileID: 8300000, guid: dcc90ab06b8ad7d418d4845bf0741e00, type: 3}
+  matchaudio: {fileID: 8300000, guid: 9d6d0e4d566fc5940b9b53fffd7767a0, type: 3}
+  levelcomp: {fileID: 8300000, guid: c69cd768168f15f43882cd69d482eb8a, type: 3}
+  gameOver: {fileID: 8300000, guid: 72642577927a50a40a045742094e1b15, type: 3}
+  audiosource: {fileID: 751866529}
   Coin: {fileID: 1488100811}
 --- !u!82 &751866529
 AudioSource:

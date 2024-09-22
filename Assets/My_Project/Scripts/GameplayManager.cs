@@ -33,6 +33,10 @@ namespace cyb
         public int numberofSprites;
         [Header("Audio")]
         public AudioClip flipAudio;
+        public AudioClip matchaudio;
+        public AudioClip levelcomp;
+        public AudioClip gameOver;
+        public AudioSource audiosource;
         [Header("Animations")]
         public Transform Coin;
         void Start()
@@ -42,7 +46,7 @@ namespace cyb
             instance = this;
 
             grid = PlayArea.GetComponent<GridLayoutGroup>();
-        
+            audiosource = gameObject.GetComponent<AudioSource>();
         }
 
       
@@ -132,7 +136,7 @@ namespace cyb
                     StartCoroutine(TransitionAndDestroyCards(g, previousCard, Coin));
                     FruitsList.Clear();       // Clear the FruitsList
                     CardsList.Clear();        // Clear the CardsList
-                          
+                    audiosource.PlayOneShot(matchaudio);
                     
                     return true;              // true since both matched
                 }
@@ -211,6 +215,7 @@ namespace cyb
                     PlayerPrefs.SetInt("level", currlevel + 1); // unlock the next level
                 }
                 win = true;
+                audiosource.PlayOneShot(levelcomp);
             }
             Destroy(card1);
             Destroy(card2);
@@ -241,6 +246,7 @@ namespace cyb
                 else if(TotaltimeLeft <=0 && !win)
                 {
                     win = false;
+                    
                 }
             }
         }

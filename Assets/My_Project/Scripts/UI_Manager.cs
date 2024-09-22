@@ -43,9 +43,11 @@ namespace cyb
         [Header("Mech")]
         private int TotalTime=60;
         public int levelreached;
+        private bool Gameovercalled = false;
 
         void Start()
         {
+            Gameovercalled = false;
             instance = this;
             GameMenu.SetActive(true);
             WinPanel.SetActive(false);
@@ -96,9 +98,10 @@ namespace cyb
             if (GameplayManager.win)
             {
                 OpenWinPanel();
-            }else if (!GameplayManager.win && GameplayManager.instance.TotaltimeLeft <=0)
+            }else if (!GameplayManager.win && GameplayManager.instance.TotaltimeLeft <=0 && !Gameovercalled)
             {
-               
+                Gameovercalled = true;
+                GameplayManager.instance.audiosource.PlayOneShot(GameplayManager.instance.gameOver);
                 OpenGameOverPanel();
             }
             else
@@ -166,8 +169,13 @@ namespace cyb
         }
         void ExitGame()
         {
-            GamePanel.SetActive(true);
-            GameMenu.SetActive(false);
+            
+                Debug.Log("Game is quitting...");
+                Application.Quit();
+#if UNITY_EDITOR
+                UnityEditor.EditorApplication.isPlaying = false;  // Stop playing in the Editor
+#endif
+            
         }
         void closeMenu()
         {

@@ -15,7 +15,7 @@ public class clickaudio : MonoBehaviour
         {
             button = gameObject.GetComponent<Button>();
             audioSource = FindObjectOfType<AudioSource>();
-            Debug.Log("button::" + button + "audioSource::" + audioSource);
+           // Debug.Log("button::" + button + "audioSource::" + audioSource);
             button.onClick.AddListener(PlayTapSound);
         }
         
