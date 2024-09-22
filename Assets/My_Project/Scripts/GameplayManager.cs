@@ -16,16 +16,18 @@ namespace cyb
         public Sprite[] Sprites;        //total availabe Sprites can be added
         public List<string> FruitsList; //to maintan previous and curr selected name
         public List<GameObject> CardsList; //to maintan previous and curr selected card
-        private GridLayoutGroup grid;
+        public GridLayoutGroup grid;
         public GameObject[] InstCards;  //keeps track of all Instantiated Cards
         public static bool win;
-       
+        public int currlevel;
 
         [Header("Scoring")]
         public int pairsmade;
         public TextMeshProUGUI timerText;
-        public int Totaltime =60; // To keep track of time 
-       
+        public int TotaltimeLeft=60; // To keep track of time left
+        
+
+
         [Header("Game Settings")]
         public int numberofcards;  //Setting for Game 
         public int numberofSprites;
@@ -38,33 +40,35 @@ namespace cyb
             win = false;
             
             instance = this;
-            InstCards = new GameObject[numberofcards];
+
             grid = PlayArea.GetComponent<GridLayoutGroup>();
-            if (numberofcards > 12 && numberofcards <=16)
-            {
-                grid.cellSize =  new Vector2(75f,75f);
-                grid.spacing = new Vector2(100f, 100f);
-            }
-           
-            numberofSprites = Convert.ToInt32( numberofcards / 2); //number of sprites should be half of total cards(to make all pairs)
+        
         }
 
       
     //Place Cards
-       public void placeCards()
+       public void placeCards(int level)
         {
+            InstCards = new GameObject[numberofcards];
+            numberofSprites = Convert.ToInt32(numberofcards / 2); //number of sprites should be half of total cards(to make all pairs) 
             pairsmade = 0;
+            currlevel = level;
+            if(numberofcards > 12)
+            {
+                grid.spacing = new Vector2(100,100);
+            }
             for(int i = 0; i < InstCards.Length; i++)
             {
                 InstCards[i] = Instantiate(CardPrefab, PlayArea.transform);
                 CardFlip cardFlip = InstCards[i].AddComponent<CardFlip>(); 
                 InstCards[i].GetComponent<Button>().onClick.AddListener(cardFlip.RotateTo180);
                 clickaudio c =InstCards[i].AddComponent<clickaudio>();
+                InstCards[i].GetComponent<Button>().onClick.AddListener(c.PlayTapSound);
                 c.tapSound = flipAudio;
 
             }
             PlaceRandomFruit();
-            Totaltime = 60;
+            
         }
 
         //set Random Fruit Images 
@@ -109,6 +113,7 @@ namespace cyb
                 
             }
             StartCoroutine(IncrementTimer());
+            
         }
 
         // Logic is Implemented as per the document: Not to wait for matching ,just keep on matching cards as the user clicks it
@@ -123,13 +128,12 @@ namespace cyb
                 if (previousName == str)
                 {
                     // If the names match, remove both Cards and clear both lists
-                   // Destroy(g,1f);               // Destroy the current Card
-                  //  Destroy(previousCard,1f);    // Destroy the previous Card
+                   
                     StartCoroutine(TransitionAndDestroyCards(g, previousCard, Coin));
                     FruitsList.Clear();       // Clear the FruitsList
                     CardsList.Clear();        // Clear the CardsList
-                    //Debug.Log("Both cards match, deleted both and cleared lists.");
-                   
+                          
+                    
                     return true;              // true since both matched
                 }
                 else
@@ -196,6 +200,14 @@ namespace cyb
             pairsmade++;
             if (pairsmade >= numberofcards / 2)
             {
+
+                Debug.Log("::::::::::"+PlayerPrefs.GetInt("level"));
+                Debug.Log("::::::::::" + currlevel);
+
+                if (PlayerPrefs.GetInt("level") == currlevel)
+                {
+                    PlayerPrefs.SetInt("level", currlevel + 1); // unlock the next level
+                }
                 win = true;
             }
             Destroy(card1);
@@ -206,30 +218,32 @@ namespace cyb
 
         private IEnumerator IncrementTimer()
         {
-            Totaltime = 60; // Reset the timer
+           
 
-            while (Totaltime>=0) // Infinite loop to keep the timer running
+            while (TotaltimeLeft>=0) // Infinite loop to keep the timer running
             {
                 yield return new WaitForSeconds(1f); 
-                Totaltime -= 1; 
-                timerText.text = Totaltime.ToString();
-                if (Totaltime>30)
+                TotaltimeLeft -= 1; 
+                timerText.text = TotaltimeLeft.ToString();
+                if (TotaltimeLeft>30)
                 {
                     timerText.color = Color.green;
                 }
-                else if(Totaltime < 30 && Totaltime>11)
+                else if(TotaltimeLeft < 30 && TotaltimeLeft>11)
                 {
                     timerText.color= new Color(1f, 0.5f, 0f);
-                }else if (Totaltime <= 10)
+                }else if (TotaltimeLeft <= 10)
                 {
                     timerText.color = Color.red;
                 }
-                else if(Totaltime <=0)
+                else if(TotaltimeLeft <=0 && !win)
                 {
                     win = false;
                 }
             }
         }
+
+
         //Random selection of n elements in array
         public int[] SelectRandomndexs(int[] array, int numberOfElements)
         {

@@ -21,7 +21,7 @@ public class clickaudio : MonoBehaviour
         
     }
 
-    private void PlayTapSound()
+    public void PlayTapSound()
     {
         if (tapSound != null && audioSource != null)
         {
