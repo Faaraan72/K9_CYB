@@ -3,6 +3,7 @@ using UnityEngine.UI;
 using System;
 using System.Collections.Generic;
 using System.Collections;
+using TMPro;
 
 namespace cyb
 {
@@ -17,13 +18,25 @@ namespace cyb
         public List<GameObject> CardsList; //to maintan previous and curr selected card
         private GridLayoutGroup grid;
         public GameObject[] InstCards;  //keeps track of all Instantiated Cards
+        public static bool win;
+       
+
+        [Header("Scoring")]
+        public int pairsmade;
+        public TextMeshProUGUI timerText;
+        public int Totaltime =60; // To keep track of time 
+       
         [Header("Game Settings")]
         public int numberofcards;  //Setting for Game 
         public int numberofSprites;
         [Header("Audio")]
         public AudioClip flipAudio;
+        [Header("Animations")]
+        public Transform Coin;
         void Start()
         {
+            win = false;
+            
             instance = this;
             InstCards = new GameObject[numberofcards];
             grid = PlayArea.GetComponent<GridLayoutGroup>();
@@ -40,6 +53,7 @@ namespace cyb
     //Place Cards
        public void placeCards()
         {
+            pairsmade = 0;
             for(int i = 0; i < InstCards.Length; i++)
             {
                 InstCards[i] = Instantiate(CardPrefab, PlayArea.transform);
@@ -50,7 +64,7 @@ namespace cyb
 
             }
             PlaceRandomFruit();
-            
+            Totaltime = 60;
         }
 
         //set Random Fruit Images 
@@ -94,6 +108,7 @@ namespace cyb
                j++;
                 
             }
+            StartCoroutine(IncrementTimer());
         }
 
         // Logic is Implemented as per the document: Not to wait for matching ,just keep on matching cards as the user clicks it
@@ -108,13 +123,13 @@ namespace cyb
                 if (previousName == str)
                 {
                     // If the names match, remove both Cards and clear both lists
-                    Destroy(g,1f);               // Destroy the current Card
-                    Destroy(previousCard,1f);    // Destroy the previous Card
-                    
+                   // Destroy(g,1f);               // Destroy the current Card
+                  //  Destroy(previousCard,1f);    // Destroy the previous Card
+                    StartCoroutine(TransitionAndDestroyCards(g, previousCard, Coin));
                     FruitsList.Clear();       // Clear the FruitsList
                     CardsList.Clear();        // Clear the CardsList
                     //Debug.Log("Both cards match, deleted both and cleared lists.");
-
+                   
                     return true;              // true since both matched
                 }
                 else
@@ -143,9 +158,80 @@ namespace cyb
             g.GetComponent<CardFlip>().RotateBackTo0();
         }
 
+      private IEnumerator TransitionAndDestroyCards(GameObject card1, GameObject card2, Transform target)
+        {
+            float transitionDuration = 0.5f;  // Duration of the transition
+            float elapsedTime = 0f;
 
+            Vector3 startPosition1 = card1.transform.position;
+            Vector3 startPosition2 = card2.transform.position;
+
+            Vector3 startScale1 = card1.transform.localScale;
+            Vector3 startScale2 = card2.transform.localScale;
+
+            Vector3 targetScale = Vector3.zero;  // The target scale, we want them to shrink to zero
+
+            while (elapsedTime < transitionDuration)
+            {
+                // Interpolate both cards' positions and scale towards the destination and smaller size
+                card1.transform.position = Vector3.Lerp(startPosition1, target.position, elapsedTime / transitionDuration);
+                card2.transform.position = Vector3.Lerp(startPosition2, target.position, elapsedTime / transitionDuration);
+
+                // Interpolate the scale (shrinking the cards)
+                card1.transform.localScale = Vector3.Lerp(startScale1, targetScale, elapsedTime / transitionDuration);
+                card2.transform.localScale = Vector3.Lerp(startScale2, targetScale, elapsedTime / transitionDuration);
+
+                elapsedTime += Time.deltaTime;
+                yield return null;  // Wait for the next frame
+            }
+
+            // Ensure both cards reach the exact target position and scale at the end
+            card1.transform.position = target.position;
+            card2.transform.position = target.position;
+
+            card1.transform.localScale = targetScale;  // Final scale to zero
+            card2.transform.localScale = targetScale;  // Final scale to zero
+
+            yield return new WaitForEndOfFrame();  // Wait for 1 second before destroying them
+            pairsmade++;
+            if (pairsmade >= numberofcards / 2)
+            {
+                win = true;
+            }
+            Destroy(card1);
+            Destroy(card2);
+           
+        }
+
+
+        private IEnumerator IncrementTimer()
+        {
+            Totaltime = 60; // Reset the timer
+
+            while (Totaltime>=0) // Infinite loop to keep the timer running
+            {
+                yield return new WaitForSeconds(1f); 
+                Totaltime -= 1; 
+                timerText.text = Totaltime.ToString();
+                if (Totaltime>30)
+                {
+                    timerText.color = Color.green;
+                }
+                else if(Totaltime < 30 && Totaltime>11)
+                {
+                    timerText.color= new Color(1f, 0.5f, 0f);
+                }else if (Totaltime <= 10)
+                {
+                    timerText.color = Color.red;
+                }
+                else if(Totaltime <=0)
+                {
+                    win = false;
+                }
+            }
+        }
         //Random selection of n elements in array
-      public int[] SelectRandomndexs(int[] array, int numberOfElements)
+        public int[] SelectRandomndexs(int[] array, int numberOfElements)
         {
            
 
